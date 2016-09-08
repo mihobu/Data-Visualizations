@@ -56,6 +56,6 @@ int main(int argc,char **argv) {
     cout << "\n";             // newline after each row
   }
 
-  cout << "Bye!";             // Say goodbye
+  cout << "Good night, Gracie!";             // Say good night, Gracie
   return(0);
 }
