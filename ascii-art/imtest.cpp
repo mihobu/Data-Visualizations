@@ -15,10 +15,15 @@ int main(int argc,char **argv) {
 
   Image img;                  // data object for our loaded image
   unsigned int row, col;      // iterate over image pixels
-  char dot[10] = {            // characters to represent
-    ' ', '.', ':', '-', '=',  // 10 levels of gray
-    '+', '*', '#', '%', '@'
-  };
+  // characters to represent 10 levels of gray
+  //
+  // This is a convincing sequence (paulbourke.net/dataformats/asciiart)
+  // char dot[10] = { ' ', '.', ':', '-', '=', '+', '*', '#', '%', '@' };
+  //
+  // but this sequence is even more convincing:
+  // (from http://larc.unt.edu/ian/art/ascii/shader)
+  char dot[10] = { ' ', '.', ':', '*', '|', 'V', 'F', 'N', 'M', '@' };
+
   ColorGray pix1, pix2;       // objects to store pixel color info
   int shade;                  // the shade scaled to the range 0..9
   char *fname = argv[1];      // file name of the image to load
