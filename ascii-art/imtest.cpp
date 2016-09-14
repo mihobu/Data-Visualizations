@@ -15,14 +15,17 @@ int main(int argc,char **argv) {
 
   Image img;                  // data object for our loaded image
   unsigned int row, col;      // iterate over image pixels
+
   // characters to represent 10 levels of gray
-  //
   // This is a convincing sequence (paulbourke.net/dataformats/asciiart)
-  // char dot[10] = { ' ', '.', ':', '-', '=', '+', '*', '#', '%', '@' };
+  // ' .:-=+*#%@'
   //
-  // but this sequence is even more convincing:
+  // but this sequence is even better:
   // (from http://larc.unt.edu/ian/art/ascii/shader)
-  char dot[10] = { ' ', '.', ':', '*', '|', 'V', 'F', 'N', 'M', '@' };
+  // ' .:*|VFNM@'
+
+  string dots = "@MNFV|*:. "; // darkest to lightest
+  unsigned int ndots = dots.length();
 
   ColorGray pix1, pix2;       // objects to store pixel color info
   int shade;                  // the shade scaled to the range 0..9
@@ -44,14 +47,19 @@ int main(int argc,char **argv) {
   // visit every pixel in every OTHER row
   for ( row = 0 ; row < img.rows() ; row+=2 ) {
     for ( col = 0 ; col < img.columns() ; col++ ) {
+
       // Since terminal characters tend to be taller than they are wide,
       // we'll average the pixels from two rows and convert that averaged
       // value to a character. That way, our rendered ASCII art doesn't
       // appear stretched out vertically.
       pix1 = ColorGray(img.pixelColor(col,row));
       pix2 = ColorGray(img.pixelColor(col,row+1));
-      shade = 9 - round( ((pix1.shade()+pix2.shade())/2) * 9);
-      cout << dot[shade];     // output the character for this dot
+
+      // convert shade (avg of two pixels) to character
+      shade = round( ((pix1.shade()+pix2.shade())/2) * (ndots-1));
+
+      // write the character for that pixel
+      cout << dots[shade];
     }
     cout << "\n";             // newline after each row
   }
